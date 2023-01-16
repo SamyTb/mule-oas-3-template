@@ -1,26 +1,22 @@
-components:
-  schemas:
-    Lead:
-      required:
-        - name
-        - email
-      type: object
-      properties:
-        id:
-          type: string
-          example: 00Q68000005RITMEA4
-        name:
-          type: string
-          example: Frederick Mann
-        email:
-          type: string
-          example: fmann@example.com
-        industry:
-          type: string
-          description: industry of the lead
-          enum:
-            - agriculture
-            - banking
-            - web3
-      xml:
-        name: lead
+Lead:
+  required:
+    - name
+    - email
+  type: object
+  properties:
+    id:
+      type: string
+      example: 00Q68000005RITMEA4
+    name:
+      type: string
+      example: Frederick Mann
+    email:
+      type: string
+      example: fmann@example.com
+    industry:
+      type: string
+      description: industry of the lead
+      enum:
+        - agriculture
+        - banking
+        - web3

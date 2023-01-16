@@ -25,7 +25,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: 'types/Lead.yml'
+              $ref: 'types/Lead.yml#/Lead'
         required: true
       responses:
         '200':
@@ -33,10 +33,10 @@ paths:
           content:
             application/json:
               schema:
-                $ref: 'types/Lead.yml'   
+                $ref: 'types/Lead.yml#/Lead'
             application/xml:
               schema:
-                $ref: 'types/Lead.yml'
+                $ref: 'types/Lead.yml#/Lead'
         '400':
           description: Invalid ID supplied
         '404':
@@ -58,13 +58,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: 'types/lead.yml'
+              $ref: 'types/Lead.yml#/Lead'
           application/xml:
             schema:
-              $ref: 'types/Lead.yml'
+              $ref: 'types/Lead.yml#/Lead'
           application/x-www-form-urlencoded:
             schema:
-              $ref: 'types/Lead.yml'
+              $ref: 'types/Lead.yml#/Lead'
         required: true
       responses:
         '200':
@@ -72,10 +72,10 @@ paths:
           content:
             application/json:
               schema:
-                $ref: 'types/Lead.yml'       
+                $ref: 'types/Lead.yml#/Lead'
             application/xml:
               schema:
-                $ref: 'types/Lead.yml'
+                $ref: 'types/Lead.yml#/Lead'
         '405':
           description: Invalid input
       security:
@@ -103,10 +103,10 @@ paths:
           content:
             application/json:
               schema:
-                $ref: 'types/Lead.yml'         
+                $ref: 'types/Lead.yml#/Lead'
             application/xml:
               schema:
-                $ref: 'types/Lead.yml'
+                $ref: 'types/Lead.yml#/Lead'
         '400':
           description: Invalid ID supplied
         '404':
@@ -172,17 +172,17 @@ paths:
         - petstore_auth:
             - write:pets
             - read:pets
-  /pet/{petId}/uploadImage:
+  /lead/{leadId}/uploadImage:
     post:
       tags:
-        - pet
+        - lead
       summary: uploads an image
       description: ''
       operationId: uploadFile
       parameters:
         - name: leadId
           in: path
-          description: ID of pet to update
+          description: ID of lead to update
           required: true
           schema:
             type: integer
@@ -205,7 +205,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: 'types/ApiResponse.yml'
+                $ref: 'types/ApiResponse.yml#/ApiResponse'
       security:
         - petstore_auth:
             - write:leads
@@ -223,42 +223,6 @@ components:
           type: string
       xml:
         name: tag
-    Lead:
-      required:
-        - name
-        - email
-      type: object
-      properties:
-        id:
-          type: string
-          example: 00Q68000005RITMEA4
-        name:
-          type: string
-          example: Frederick Mann
-        email:
-          type: string
-          example: fmann@example.com
-        industry:
-          type: string
-          description: industry of the lead
-          enum:
-            - agriculture
-            - banking
-            - web3
-      xml:
-        name: pet
-    ApiResponse:
-      type: object
-      properties:
-        code:
-          type: integer
-          format: int32
-        type:
-          type: string
-        message:
-          type: string
-      xml:
-        name: '##default'
   requestBodies:
     Lead:
       description: Lead object that needs to be added to the store
