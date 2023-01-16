@@ -43,10 +43,10 @@ paths:
           description: Pet not found
         '405':
           description: Validation exception
-      security:
-        - petstore_auth:
-            - write:leads
-            - read:leads
+      security: 
+        - client-id: []
+        - client-secret: []
+
     post:
       tags:
         - lead
@@ -79,7 +79,7 @@ paths:
         '405':
           description: Invalid input
       security:
-        - petstore_auth:
+        - oauth:
             - write:leads
             - read:leads
   
@@ -113,9 +113,6 @@ paths:
           description: Pet not found
       security:
         - api_key: []
-        - petstore_auth:
-            - write:leads
-            - read:leads
     post:
       tags:
         - lead
@@ -234,15 +231,15 @@ components:
           schema:
             $ref: 'types/Lead.yml'
   securitySchemes:
-    petstore_auth:
-      type: oauth2
-      flows:
-        implicit:
-          authorizationUrl: https://localhost/oauth/authorize
-          scopes:
-            write:leads: modify leads
-            read:leads: read your leads
+    jwt:
+      $ref: 'securitySchemes/jwt.yml#/components/securitySchemes/JWT'
+    oauth:
+      $ref: 'securitySchemes/oauth.yml#/components/securitySchemes/oauth'
     api_key:
-      type: apiKey
-      name: api_key
-      in: header
+      $ref: 'securitySchemes/api-key.yml#/components/securitySchemes/api_key'
+    basic-auth:
+      $ref: 'securitySchemes/basic-auth.yml#/components/securitySchemes/basic-auth'
+    client-id:
+      $ref: 'securitySchemes/client-id-secret.yml#/components/securitySchemes/client-id'
+    client-secret:
+      $ref: 'securitySchemes/client-id-secret.yml#/components/securitySchemes/client-secret'

@@ -1,0 +1,10 @@
+components:
+  securitySchemes:
+    oauth:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: https://localhost/oauth/authorize
+          scopes:
+            write:leads: modify leads
+            read:leads: read your leads

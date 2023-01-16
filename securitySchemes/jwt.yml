@@ -1,0 +1,7 @@
+components:
+  securitySchemes:
+    JWT:
+      description: JWT bearer token description...
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

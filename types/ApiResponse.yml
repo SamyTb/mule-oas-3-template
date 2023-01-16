@@ -4,7 +4,10 @@ ApiResponse:
     code:
       type: integer
       format: int32
+      example: 200
     type:
       type: string
+      example: 'success'
     message:
       type: string
+      example: 'request processed successfully'
