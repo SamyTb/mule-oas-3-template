@@ -140,9 +140,8 @@ paths:
         '405':
           description: Invalid input
       security:
-        - petstore_auth:
-            - write:leads
-            - read:leads
+        - jwt: []
+            
     delete:
       tags:
         - lead
@@ -166,9 +165,8 @@ paths:
         '400':
           description: Invalid lead value
       security:
-        - petstore_auth:
-            - write:pets
-            - read:pets
+        - basic-auth: []
+            
   /lead/{leadId}/uploadImage:
     post:
       tags:
@@ -204,32 +202,12 @@ paths:
               schema:
                 $ref: 'types/ApiResponse.yml#/ApiResponse'
       security:
-        - petstore_auth:
-            - write:leads
-            - read:leads
+        - jwt: []
   
 components:
   schemas:
-    Tag:
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int64
-        name:
-          type: string
-      xml:
-        name: tag
-  requestBodies:
-    Lead:
-      description: Lead object that needs to be added to the store
-      content:
-        application/json:
-          schema:
-            $ref: 'types/Lead.yml'
-        application/xml:
-          schema:
-            $ref: 'types/Lead.yml'
+    $ref: 'types/Tag.yml#/Tag'
+  
   securitySchemes:
     jwt:
       $ref: 'securitySchemes/jwt.yml#/components/securitySchemes/JWT'
