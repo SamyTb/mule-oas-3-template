@@ -1,0 +1,290 @@
+openapi: 3.0.3
+info:
+  title: Salesforce System API - OpenAPI 3.0
+  description: |-
+    This is a sample Mulesoft API based on the OpenAPI 3.0 specification.
+  contact:
+    email: stoubal@salesforce.com
+  version: 1.0.0
+
+servers:
+  - url: https://localhost/api/v1
+tags:
+  - name: lead
+    description: Everything about your Leads
+paths:
+  /lead:
+    put:
+      tags:
+        - lead
+      summary: Update an existing lead
+      description: Update an existing lead by Id
+      operationId: updateLead
+      requestBody:
+        description: Update an existent lead in salesforce
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Lead'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Lead'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Lead'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Lead'          
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Lead'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Pet not found
+        '405':
+          description: Validation exception
+      security:
+        - petstore_auth:
+            - write:leads
+            - read:leads
+    post:
+      tags:
+        - lead
+      summary: Add a new lead
+      description: Add a new lead
+      operationId: addLead
+      requestBody:
+        description: Create a new lead in Salesforce
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Lead'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Lead'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Lead'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Lead'          
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Lead'
+        '405':
+          description: Invalid input
+      security:
+        - petstore_auth:
+            - write:leads
+            - read:leads
+  
+  /lead/{leadId}:
+    get:
+      tags:
+        - lead
+      summary: Find lead by ID
+      description: Returns a single lead
+      operationId: getLeadById
+      parameters:
+        - name: leadId
+          in: path
+          description: ID of pet to return
+          required: true
+          schema:
+            type: string      
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Lead'          
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Lead'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Pet not found
+      security:
+        - api_key: []
+        - petstore_auth:
+            - write:leads
+            - read:leads
+    post:
+      tags:
+        - lead
+      summary: Updates a lead in Salesforce
+      description: ''
+      operationId: updateLeadById
+      parameters:
+        - name: leadId
+          in: path
+          description: ID of lead that needs to be updated
+          required: true
+          schema:
+            type: string
+        - name: name
+          in: query
+          description: Name of lead that needs to be updated
+          schema:
+            type: string
+        - name: status
+          in: query
+          description: Status of lead that needs to be updated
+          schema:
+            type: string
+      responses:
+        '405':
+          description: Invalid input
+      security:
+        - petstore_auth:
+            - write:leads
+            - read:leads
+    delete:
+      tags:
+        - lead
+      summary: Deletes a lead
+      description: delete a lead
+      operationId: deleteLead
+      parameters:
+        - name: api_key
+          in: header
+          description: ''
+          required: false
+          schema:
+            type: string
+        - name: leadId
+          in: path
+          description: Lead id to delete
+          required: true
+          schema:
+            type: string
+      responses:
+        '400':
+          description: Invalid lead value
+      security:
+        - petstore_auth:
+            - write:pets
+            - read:pets
+  /pet/{petId}/uploadImage:
+    post:
+      tags:
+        - pet
+      summary: uploads an image
+      description: ''
+      operationId: uploadFile
+      parameters:
+        - name: leadId
+          in: path
+          description: ID of pet to update
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: additionalMetadata
+          in: query
+          description: Additional Metadata
+          required: false
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/octet-stream:
+            schema:
+              type: string
+              format: binary
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: 'ApiResponse.yml'
+      security:
+        - petstore_auth:
+            - write:leads
+            - read:leads
+  
+components:
+  schemas:
+    Tag:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+      xml:
+        name: tag
+    Lead:
+      required:
+        - name
+        - email
+      type: object
+      properties:
+        id:
+          type: string
+          example: 00Q68000005RITMEA4
+        name:
+          type: string
+          example: Frederick Mann
+        email:
+          type: string
+          example: fmann@example.com
+        industry:
+          type: string
+          description: industry of the lead
+          enum:
+            - agriculture
+            - banking
+            - web3
+      xml:
+        name: pet
+    ApiResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        type:
+          type: string
+        message:
+          type: string
+      xml:
+        name: '##default'
+  requestBodies:
+    Lead:
+      description: Lead object that needs to be added to the store
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Lead'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Lead'
+  securitySchemes:
+    petstore_auth:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: https://localhost/oauth/authorize
+          scopes:
+            write:leads: modify leads
+            read:leads: read your leads
+    api_key:
+      type: apiKey
+      name: api_key
+      in: header
