@@ -25,13 +25,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Lead'
+              $ref: 'types/Lead.yml'
           application/xml:
             schema:
-              $ref: '#/components/schemas/Lead'
+              $ref: 'types/Lead.yml'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/Lead'
+              $ref: 'types/Lead.yml'
         required: true
       responses:
         '200':
@@ -39,10 +39,10 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Lead'          
+                $ref: 'types/Lead.yml'   
             application/xml:
               schema:
-                $ref: '#/components/schemas/Lead'
+                $ref: 'types/Lead.yml'
         '400':
           description: Invalid ID supplied
         '404':
@@ -64,13 +64,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Lead'
+              $ref: 'types/lead.yml'
           application/xml:
             schema:
-              $ref: '#/components/schemas/Lead'
+              $ref: 'types/Lead.yml'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/Lead'
+              $ref: 'types/Lead.yml'
         required: true
       responses:
         '200':
@@ -78,10 +78,10 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Lead'          
+                $ref: 'types/Lead.yml'       
             application/xml:
               schema:
-                $ref: '#/components/schemas/Lead'
+                $ref: 'types/Lead.yml'
         '405':
           description: Invalid input
       security:
@@ -109,10 +109,10 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Lead'          
+                $ref: 'types/Lead.yml'         
             application/xml:
               schema:
-                $ref: '#/components/schemas/Lead'
+                $ref: 'types/Lead.yml'
         '400':
           description: Invalid ID supplied
         '404':
