@@ -26,7 +26,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: 'types/Lead.yml#/Lead'
+              $ref: './types/Lead.yml'
         required: true
       responses:
         '200':
@@ -34,7 +34,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: 'types/Lead.yml#/Lead'
+                $ref: './types/Lead.yml'
         '400':
           description: Invalid ID supplied
         '404':
@@ -56,7 +56,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: 'types/Lead.yml#/Lead'
+              $ref: './types/Lead.yml'
         required: true
       responses:
         '200':
@@ -64,7 +64,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: 'types/Lead.yml#/Lead'
+                $ref: './types/Lead.yml'
         '405':
           description: Invalid input
       security:
@@ -92,7 +92,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: 'types/Lead.yml#/Lead'
+                $ref: './types/Lead.yml'
         '400':
           description: Invalid ID supplied
         '404':
