@@ -5,8 +5,8 @@ before_script:
   - npm install -g @stoplight/spectral-cli
 
 variables:
-  MAIN_FILE: 'echo "$CI_PROJECT_NAME" | sed -e "s/-spec/.yaml/g"'
-  BUNDLE_FILE: 'echo "$CI_PROJECT_NAME" | sed -e "s/-spec/-bundle.yaml/g"'
+  MAIN_FILE: $(echo "$CI_PROJECT_NAME" | sed -e "s/-spec/.yaml/g")
+  BUNDLE_FILE: $(echo "$CI_PROJECT_NAME" | sed -e "s/-spec/-bundle.yaml/g")
 
 stages:          # List of stages for jobs, and their order of execution
   - build
