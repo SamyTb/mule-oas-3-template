@@ -1,7 +1,7 @@
 image: node:lts
 
 before_script:
-  - sudo npm install -g @apidevtools/swagger-cli
+  - npm install -g @apidevtools/swagger-cli
 
 stages:          # List of stages for jobs, and their order of execution
   - build
