@@ -1,0 +1,24 @@
+type: object
+properties:
+  id:
+    type: string
+    example: 00168000005RITMEA4
+  name:
+    type: string
+    example: Real Madrid
+  number-of-employees:
+    type: number
+    example: 1000
+  email:
+    type: string
+    example: company@realmadrid.com
+  industry:
+    type: string
+    description: industry of the account
+    enum:
+      - football
+      - banking
+      - web3
+required:
+  - name
+  - email

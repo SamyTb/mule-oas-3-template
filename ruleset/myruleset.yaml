@@ -1,4 +1,3 @@
-extends: ["spectral:oas"]
 rules:
   openapi-v3-have-get-method:
     description: Ensures that all APIs at least have one GET method.
@@ -10,7 +9,6 @@ rules:
     then:
       field: get
       function: truthy
-
   openapi-v3-do-not-use-api-for-base-path:
     description: Ensures that paths do not use /api as part of the base path.
     message: You should not use /api as part of your base path.
@@ -20,7 +18,6 @@ rules:
       function: pattern
       functionOptions:
         notMatch: "^/api"
-
   openapi-v3-info-contact:
     description: Ensures that all APIs have contact information.
     message: API must have a contact information available.
@@ -42,7 +39,6 @@ rules:
     then:
       field: email
       function: truthy
-
   openapi-v3-info-contact-name:
     description: Ensures that all APIs have contact name.
     message: API must have a contact name available.
@@ -51,7 +47,6 @@ rules:
     then:
       field: name
       function: truthy
-
   openapi-v3-operations-tags:
     description: Ensures that each of the operations have a tags property.
     message: All of your operations need to have tags.
@@ -60,3 +55,135 @@ rules:
     then:
     - field: tags
       function: truthy
+  openapi-v3-openapi-version:
+    description: Ensuring that a specific version of OpenAPI is being used.
+    message: You do not have the right version of OpenAPI.
+    severity: error
+    given: "$"
+    then:
+      field: openapi
+      function: pattern
+      functionOptions:
+        match: 3.0.3
+  openapi-v3-operations-description:
+    description: Ensures that each of the operations have a description.
+    message: Your operations all need descriptions.
+    severity: error
+    given: "$.paths.*[get,post,patch,put,delete]"
+    then:
+    - field: description
+      function: truthy
+  openapi-v3-operations-description-length:
+    description: Ensures that the description for operations are not too long.
+    message: Your operation descriptions should not be more than 250 characters.
+    given: "$.paths.*[get,post,patch,put,delete]"
+    recommended: true
+    then:
+    - field: description
+      function: length
+      functionOptions:
+        max: 250
+    type: style
+  openapi-v3-request-body-on-patch:
+    description: Ensures that PATCH methods have request bodies.
+    message: Your PATCH methods should have request bodies.
+    given: "$.paths.*.patch"
+    recommended: true
+    severity: error
+    then:
+      field: requestBody
+      function: truthy
+  openapi-v3-request-body-on-post:
+    description: Ensures that POST methods have request bodies.
+    message: Your POST methods should have request bodies.
+    given: "$.paths.*.post"
+    recommended: true
+    severity: error
+    then:
+      field: requestBody
+      function: truthy
+  openapi-v3-request-body-on-put:
+    description: Ensures that PUT methods have request bodies.
+    message: Your PUT methods should have request bodies.
+    given: "$.paths.*.put"
+    recommended: true
+    severity: error
+    then:
+      field: requestBody
+      function: truthy
+  openapi-v3-have-request-body-examples:
+    severity: error
+    description: Ensures that a example is always present for each request body.
+    message: All request bodies should have an example present.
+    given: "$.paths.*.*.requestBody..[?(@.items)][?(@.type == 'object')]"
+    formats:
+    - oas3
+    then:
+    - field: example
+      function: truthy
+  openapi-v3-no-trailing-slash-on-paths:
+    description: Ensures that there are no trailing slashes on paths.
+    message: There should be no trailing slashes on paths.
+    severity: error
+    given: "$.paths.*~"
+    then:
+      function: pattern
+      functionOptions:
+        notMatch: "/$"
+  openapi-v3-info-version:
+    description: Ensures that all OpenAPIs have a information object version.
+    message: The info object should have a version.
+    given: "$.info"
+    severity: error
+    recommended: true
+    type: style
+    formats:
+    - oas3
+    then:
+      field: version
+      function: truthy
+  openapi-v3-info-x-audience:
+    description: Ensures that all OpenAPIs have a information object audience extension.
+    message: The info object should have an audience extension.
+    severity: error
+    given: "$.info"
+    then:
+      field: x-audience
+      function: truthy
+  openapi-v3-limit-number-of-sub-resources:
+    description: Ensures that there are not too many sub-resources.
+    message: There should be no more than three levels of sub-resources.
+    severity: warn
+    given: "$.paths.*~"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^/[^/]*((/{[^}]*})*/[^/]*(/{[^}]*})*){0,3}/?$"
+  openapi-v3-no-path-dashes:
+    description: Ensures that paths do not contain dashes.
+    message: Your paths should not contain dashes.
+    severity: error
+    recommended: true
+    given: "$.paths[*]~"
+    then:
+      function: pattern
+      functionOptions:
+        notMatch: "/-/"
+  openapi-v3-no-request-body-on-delete:
+    description: Ensures that DELETE methods do not have request bodies.
+    message: Your DELETE methods should not have request bodies.
+    given: "$.paths.*.delete"
+    recommended: true
+    severity: error
+    then:
+      field: requestBody
+      function: falsy
+  openapi-v3-no-request-body-on-get:
+    description: Ensures that GET methods do not have request bodies.
+    message: Your GET methods should not have request bodies.
+    given: "$.paths.*.get"
+    recommended: true
+    severity: error
+    then:
+      field: requestBody
+      function: falsy

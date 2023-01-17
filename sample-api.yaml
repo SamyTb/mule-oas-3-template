@@ -1,12 +1,13 @@
 openapi: 3.0.3
 info:
-  title: Salesforce System API - OpenAPI 3.0
+  title: Sample API - OpenAPI 3.0
   description: |-
     This is a sample Mulesoft API based on the OpenAPI 3.0 specification.
   contact:
     email: stoubal@salesforce.com
     name: Samy Toubal
   version: 1.0.0
+  x-audience: internal-apps
 
 servers:
   - url: https://localhost/api/v1
@@ -14,6 +15,31 @@ tags:
   - name: lead
     description: Everything about your Leads
 paths:
+  /account:
+    get:
+      tags:
+        - account
+      summary: get existing accounts
+      description: get existing accounts
+      operationId: getAccounts
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items: 
+                  type: 
+                  $ref: 'types/Account.yaml'
+
+        '404':
+          description: Accounts not found
+        '405':
+          description: Validation exception
+      security: 
+        - client-id: []
+        - client-secret: []
   /lead:
     get:
       tags:
@@ -30,8 +56,7 @@ paths:
                 type: array
                 items: 
                   type: 
-                  oneOf:
-                    - $ref: 'types/Lead.yaml'
+                  $ref: 'types/Lead.yaml'
 
         '404':
           description: Leads not found
@@ -107,7 +132,7 @@ paths:
       parameters:
         - name: leadId
           in: path
-          description: ID of pet to return
+          description: ID of lead to return
           required: true
           schema:
             type: string      
@@ -127,8 +152,8 @@ paths:
     post:
       tags:
         - lead
-      summary: Updates a lead in Salesforce
-      description: ''
+      summary: Update a lead in Salesforce
+      description: 'Update lead'
       operationId: updateLeadById
       parameters:
         - name: leadId
@@ -162,7 +187,7 @@ paths:
       parameters:
         - name: api_key
           in: header
-          description: ''
+          description: 'delete lead'
           required: false
           schema:
             type: string
@@ -183,7 +208,7 @@ paths:
       tags:
         - lead
       summary: uploads an image
-      description: ''
+      description: 'upload image'
       operationId: uploadFile
       parameters:
         - name: leadId
@@ -211,13 +236,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: 'types/ApiResponse.yaml#/ApiResponse'
+                $ref: 'types/ApiResponse.yaml'
       security:
         - jwt: []
   
 components:
   schemas:
-    $ref: 'types/Tag.yaml#/Tag'
+    $ref: 'types/Tag.yaml'
   
   securitySchemes:
     jwt:
