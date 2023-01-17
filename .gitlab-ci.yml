@@ -18,4 +18,5 @@ build-job:       # This job runs in the build stage, which runs first.
     - echo "$BUNDLE_FILE"
     - swagger-cli bundle "$MAIN_FILE" -o "$BUNDLE_FILE"
     - ls -ax
-    - spectral lint sample-api.yaml --ruleset ruleset/myruleset.yaml
+    - spectral lint sample-api.yaml --ruleset ruleset/myruleset.yaml > result.txt
+    - ls -ax
