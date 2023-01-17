@@ -27,7 +27,7 @@ unit-test-job:   # This job runs in the test stage.
     - echo "$MAIN_FILE"
     - echo "$BUNDLE_FILE"
     - ls -ax
-    - spectral lint $BUNDLE_FILE --ruleset ruleset/myruleset.yaml > result.txt
+    - spectral lint $MAIN_FILE --ruleset ruleset/myruleset.yaml > result.txt
     - cat result.txt
 
 lint-test-job:   # This job also runs in the test stage.
