@@ -14,6 +14,8 @@ servers:
 tags:
   - name: lead
     description: Everything about your Leads
+  - name: account
+    description: Everything about your accounts
 paths:
   /account:
     get:
