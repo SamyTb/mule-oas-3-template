@@ -2,7 +2,7 @@ image: node:4.2.2
 
 before_script:
   - apt-get update
-  - npm install -g @apidevtools/swagger-cli
+  - sudo npm install -g @apidevtools/swagger-cli
 
 stages:          # List of stages for jobs, and their order of execution
   - build
