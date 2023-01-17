@@ -25,7 +25,7 @@ unit-test-job:   # This job runs in the test stage.
     - MAIN_FILE=$(echo "$CI_PROJECT_NAME" | sed -e "s/-spec/.yaml/g")
     - BUNDLE_FILE=$(echo "$CI_PROJECT_NAME" | sed -e "s/-spec/-bundle.yaml/g")
     - spectral lint $BUNDLE_FILE --ruleset ruleset/myruleset.yaml > result.txt
-    - vi result.txt
+    - cat result.txt
 
 lint-test-job:   # This job also runs in the test stage.
   stage: test    # It can run at the same time as unit-test-job (in parallel).
