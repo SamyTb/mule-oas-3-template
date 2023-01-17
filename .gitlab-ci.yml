@@ -2,6 +2,7 @@ image: node:lts
 
 before_script:
   - npm install -g @apidevtools/swagger-cli
+  - npm install -g @stoplight/spectral-cli
 
 stages:          # List of stages for jobs, and their order of execution
   - build
@@ -11,7 +12,6 @@ stages:          # List of stages for jobs, and their order of execution
 build-job:       # This job runs in the build stage, which runs first.
   stage: build
   script:
-    - npm install -g @apidevtools/swagger-cli
     - echo "Compile complete."
 
 unit-test-job:   # This job runs in the test stage.
