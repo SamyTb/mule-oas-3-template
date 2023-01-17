@@ -16,7 +16,7 @@ stages:          # List of stages for jobs, and their order of execution
 build-job:       # This job runs in the build stage, which runs first.
   stage: build
   script:
-    - MAIN_FILE=$(echo "test")
+    - MAIN_FILE=$(echo "$CI_PROJECT_NAME" | sed -e "s/-spec/.yaml/g")
     - echo "$MAIN_FILE"
     - echo "$BUNDLE_FILE"
     - swagger-cli bundle sample-api.yaml -o sample-api-bundle.yaml
