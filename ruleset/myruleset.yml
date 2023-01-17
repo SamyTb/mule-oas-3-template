@@ -10,3 +10,44 @@ rules:
     then:
       field: get
       function: truthy
+
+  openapi-v3-do-not-use-api-for-base-path:
+    description: Ensures that paths do not use /api as part of the base path.
+    message: You should not use /api as part of your base path.
+    severity: warn
+    given: "$.paths.*~"
+    then:
+      function: pattern
+      functionOptions:
+        notMatch: "^/api"
+
+  openapi-v3-info-contact:
+    description: Ensures that all APIs have contact information.
+    message: API must have a contact information available.
+    given: "$.info"
+    severity: error
+    recommended: true
+    type: style
+    formats:
+    - oas3
+    then:
+      field: contact
+      function: truthy
+
+  openapi-v3-info-contact-email:
+    description: Ensures that all APIs have contact email.
+    message: API must have a contact email available.
+    given: "$.info.contact"
+    severity: error
+    then:
+      field: email
+      function: truthy
+
+  openapi-v3-info-contact-name:
+    description: Ensures that all APIs have contact name.
+    message: API must have a contact name available.
+    given: "$.info.contact"
+    severity: error
+    then:
+      field: name
+      function: truthy

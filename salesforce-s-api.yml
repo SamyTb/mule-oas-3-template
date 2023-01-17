@@ -5,6 +5,7 @@ info:
     This is a sample Mulesoft API based on the OpenAPI 3.0 specification.
   contact:
     email: stoubal@salesforce.com
+    name: Samy Toubal
   version: 1.0.0
 
 servers:
@@ -34,13 +35,10 @@ paths:
             application/json:
               schema:
                 $ref: 'types/Lead.yml#/Lead'
-            application/xml:
-              schema:
-                $ref: 'types/Lead.yml#/Lead'
         '400':
           description: Invalid ID supplied
         '404':
-          description: Pet not found
+          description: Lead not found
         '405':
           description: Validation exception
       security: 
@@ -59,21 +57,12 @@ paths:
           application/json:
             schema:
               $ref: 'types/Lead.yml#/Lead'
-          application/xml:
-            schema:
-              $ref: 'types/Lead.yml#/Lead'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: 'types/Lead.yml#/Lead'
         required: true
       responses:
         '200':
           description: Successful operation
           content:
             application/json:
-              schema:
-                $ref: 'types/Lead.yml#/Lead'
-            application/xml:
               schema:
                 $ref: 'types/Lead.yml#/Lead'
         '405':
@@ -104,13 +93,10 @@ paths:
             application/json:
               schema:
                 $ref: 'types/Lead.yml#/Lead'
-            application/xml:
-              schema:
-                $ref: 'types/Lead.yml#/Lead'
         '400':
           description: Invalid ID supplied
         '404':
-          description: Pet not found
+          description: Lead not found
       security:
         - api_key: []
     post:

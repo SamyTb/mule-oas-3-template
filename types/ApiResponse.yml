@@ -11,3 +11,5 @@ ApiResponse:
     message:
       type: string
       example: 'request processed successfully'
+    xml:
+        name: ApiResponse

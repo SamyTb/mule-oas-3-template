@@ -6,3 +6,5 @@ Tag:
       format: int64
     name:
       type: string
+  xml:
+    name: Tag
