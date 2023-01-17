@@ -1,7 +1,6 @@
-image: node:14-alpine
+image: node:lts
 
 before_script:
-  - apt-get update
   - sudo npm install -g @apidevtools/swagger-cli
 
 stages:          # List of stages for jobs, and their order of execution
