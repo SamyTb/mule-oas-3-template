@@ -15,6 +15,31 @@ tags:
     description: Everything about your Leads
 paths:
   /lead:
+    get:
+      tags:
+        - lead
+      summary: get existing leads
+      description: get existing leads
+      operationId: getLeads
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items: 
+                  type: 
+                  oneOf:
+                    - $ref: 'types/Lead.yaml'
+
+        '404':
+          description: Leads not found
+        '405':
+          description: Validation exception
+      security: 
+        - client-id: []
+        - client-secret: []
     put:
       tags:
         - lead
@@ -26,7 +51,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: './types/Lead.yml'
+              $ref: 'types/Lead.yaml'
         required: true
       responses:
         '200':
@@ -34,7 +59,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: './types/Lead.yml'
+                $ref: './types/Lead.yaml'
         '400':
           description: Invalid ID supplied
         '404':
@@ -56,7 +81,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: './types/Lead.yml'
+              $ref: './types/Lead.yaml'
         required: true
       responses:
         '200':
@@ -64,7 +89,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: './types/Lead.yml'
+                $ref: './types/Lead.yaml'
         '405':
           description: Invalid input
       security:
@@ -92,7 +117,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: './types/Lead.yml'
+                $ref: './types/Lead.yaml'
         '400':
           description: Invalid ID supplied
         '404':
@@ -186,24 +211,24 @@ paths:
           content:
             application/json:
               schema:
-                $ref: 'types/ApiResponse.yml#/ApiResponse'
+                $ref: 'types/ApiResponse.yaml#/ApiResponse'
       security:
         - jwt: []
   
 components:
   schemas:
-    $ref: 'types/Tag.yml#/Tag'
+    $ref: 'types/Tag.yaml#/Tag'
   
   securitySchemes:
     jwt:
-      $ref: 'securitySchemes/jwt.yml#/components/securitySchemes/JWT'
+      $ref: 'securitySchemes/jwt.yaml#/components/securitySchemes/JWT'
     oauth:
-      $ref: 'securitySchemes/oauth.yml#/components/securitySchemes/oauth'
+      $ref: 'securitySchemes/oauth.yaml#/components/securitySchemes/oauth'
     api_key:
-      $ref: 'securitySchemes/api-key.yml#/components/securitySchemes/api_key'
+      $ref: 'securitySchemes/api-key.yaml#/components/securitySchemes/api_key'
     basic-auth:
-      $ref: 'securitySchemes/basic-auth.yml#/components/securitySchemes/basic-auth'
+      $ref: 'securitySchemes/basic-auth.yaml#/components/securitySchemes/basic-auth'
     client-id:
-      $ref: 'securitySchemes/client-id-secret.yml#/components/securitySchemes/client-id'
+      $ref: 'securitySchemes/client-id-secret.yaml#/components/securitySchemes/client-id'
     client-secret:
-      $ref: 'securitySchemes/client-id-secret.yml#/components/securitySchemes/client-secret'
+      $ref: 'securitySchemes/client-id-secret.yaml#/components/securitySchemes/client-secret'
