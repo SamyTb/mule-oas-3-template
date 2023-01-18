@@ -3,8 +3,6 @@ image: node:lts
 before_script:
   - npm install -g @apidevtools/swagger-cli
   - npm install -g @stoplight/spectral-cli
-  - sudo apt-get update
-  - apt-get install -y jq
 
 stages:
   - deploy
@@ -17,4 +15,4 @@ build-job:       # This job runs in the deploy stage
     - swagger-cli bundle "$MAIN_FILE" -o "$BUNDLE_FILE" #build oas 3 json bundle file
     - spectral lint $MAIN_FILE --ruleset ruleset/myruleset.yaml #check oas file with rules
     - curl --location --request POST "https://anypoint.mulesoft.com/accounts/login" --header "Content-Type:application/json" --header "Accept:application/json" --data-raw '{"username":"samy_toubal", "password":"Anypoint1Password@2"}' > token.txt
-    - cat token.txt | jq -r ".body"
+    - cat token.txt | python3 -c "import sys, json; print(json.load(sys.stdin)['body'])"
