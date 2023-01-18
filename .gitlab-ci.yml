@@ -18,7 +18,7 @@ build-job:       # This job runs in the deploy stage
     - MAIN_FILE=$(echo "$CI_PROJECT_NAME" | sed -e "s/-spec/.yaml/g") #get main file name in variable
     - BUNDLE_FILE=$(echo "$CI_PROJECT_NAME" | sed -e "s/-spec/-bundle.json/g") #get bundle file name in variable
     - MAIN_JSON_FILE=$(echo "$CI_PROJECT_NAME" | sed -e "s/-spec/.json/g") #get bundle file name in variable
-    - echo "$MAIN_JSON_FILE"
+    - echo "$(MAIN_JSON_FILE)"
     - ASSET_NAME=$(echo "$CI_PROJECT_NAME" | sed -e "s/-spec//g")
     - swagger-cli bundle "$MAIN_FILE" -o "$BUNDLE_FILE" #build oas 3 json bundle file
     - swagger-cli bundle "$BUNDLE_FILE" -o "$MAIN_JSON_FILE" #build oas 3 json oas file
