@@ -4,9 +4,9 @@ before_script:
   - npm install -g @apidevtools/swagger-cli
   - npm install -g @stoplight/spectral-cli
   - npm install -g anypoint-cli-v4
-  - anypoint-cli-v4 conf username samy_toubal
-  - anypoint-cli-v4 conf password Anypoint1Password@2
-  - anypoint-cli-v4 conf organization a9a32236-77e1-4d8b-baaf-22ff5a53b7f1
+  - export ANYPOINT_USERNAME=samy_toubal
+  - export ANYPOINT_PASSWORD=Anypoint1Password@2
+  - export ANYPOINT_ORG=a9a32236-77e1-4d8b-baaf-22ff5a53b7f1
 
 stages:
   - deploy
@@ -21,3 +21,4 @@ build-job:       # This job runs in the deploy stage
     #- curl --location --request POST "https://anypoint.mulesoft.com/accounts/login" --header "Content-Type:application/json" --header "Accept:application/json" --data-raw '{"username":"samy_toubal", "password":"Anypoint1Password@2"}' > token.txt
     #- cat token.txt | python3 -c "import sys, json; print(json.load(sys.stdin)['body']['request'])" > token.txt
     #- cat token.txt
+    - anypoint-cli-v4 account:environment:list
