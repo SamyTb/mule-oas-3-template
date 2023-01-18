@@ -6,10 +6,8 @@ before_script:
 
 stages:
   - build
-  - test
-  - deploy
 
-build-job:       # This job runs in the build stage, which runs first.
+build-job:
   stage: build
   script:
     - MAIN_FILE=$(echo "$CI_PROJECT_NAME" | sed -e "s/-spec/.yaml/g")
@@ -20,3 +18,4 @@ build-job:       # This job runs in the build stage, which runs first.
     - ls -ax
     - spectral lint sample-api.yaml --ruleset ruleset/myruleset.yaml > result.txt
     - ls -ax
+    - echo "FINISHED"
