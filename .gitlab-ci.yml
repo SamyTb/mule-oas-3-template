@@ -7,6 +7,7 @@ before_script:
   - export ANYPOINT_CLIENT_ID=6fd1624df84648248a2d21d999e7bc60
   - export ANYPOINT_CLIENT_SECRET=d308968217D24B879db0e2d0e3794398
   - export ANYPOINT_ORG=a9a32236-77e1-4d8b-baaf-22ff5a53b7f1
+  - export GROUP_ID=a9a32236-77e1-4d8b-baaf-22ff5a53b7f1
 
 stages:
   - deploy
@@ -15,10 +16,15 @@ build-job:       # This job runs in the deploy stage
   stage: deploy
   script:
     - MAIN_FILE=$(echo "$CI_PROJECT_NAME" | sed -e "s/-spec/.yaml/g") #get main file name in variable
-    - BUNDLE_FILE=$(echo "$CI_PROJECT_NAME" | sed -e "s/-spec/-bundle.yaml/g") #get bundle file name in variable
+    - BUNDLE_FILE=$(echo "$CI_PROJECT_NAME" | sed -e "s/-spec/-bundle.json/g") #get bundle file name in variable
+    - ASSET_NAME=$(echo "$CI_PROJECT_NAME" | sed -e "s/-spec//g")
     - swagger-cli bundle "$MAIN_FILE" -o "$BUNDLE_FILE" #build oas 3 json bundle file
     - spectral lint $MAIN_FILE --ruleset ruleset/myruleset.yaml #check oas file with rules
     #- curl --location --request POST "https://anypoint.mulesoft.com/accounts/login" --header "Content-Type:application/json" --header "Accept:application/json" --data-raw '{"username":"samy_toubal", "password":"Anypoint1Password@2"}' > token.txt
-    #- cat token.txt | python3 -c "import sys, json; print(json.load(sys.stdin)['body']['request'])" > token.txt
-    #- cat token.txt
+    - cat $MAIN_FILE | python3 -c "import sys, json; print(json.load(sys.stdin)['info'])" > token.txt
+    - cat token.txt
     - anypoint-cli-v4 account:environment:list
+    - anypoint-cli-v4 exchange:asset:upload --name "OAS Asset" --description "OAS" --properties='{"apiVersion":"v1", "mainFile":"test.json"}' --files='{"oas.zip":"test.zip"}' GROUP_ID/ASSET_NAME/1.0.0
+
+
+   

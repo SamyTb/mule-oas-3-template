@@ -1,0 +1,670 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Sample API - OpenAPI 3.0",
+    "description": "This is a sample Mulesoft API based on the OpenAPI 3.0 specification.",
+    "contact": {
+      "email": "stoubal@salesforce.com",
+      "name": "Samy Toubal"
+    },
+    "version": "1.0.0",
+    "x-audience": "internal-apps"
+  },
+  "servers": [
+    {
+      "url": "https://localhost/api/v1"
+    }
+  ],
+  "tags": [
+    {
+      "name": "lead",
+      "description": "Everything about your Leads"
+    },
+    {
+      "name": "account",
+      "description": "Everything about your accounts"
+    }
+  ],
+  "paths": {
+    "/account": {
+      "get": {
+        "tags": [
+          "account"
+        ],
+        "summary": "get existing accounts",
+        "description": "get existing accounts",
+        "operationId": "getAccounts",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": null,
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "example": "00168000005RITMEA4"
+                      },
+                      "name": {
+                        "type": "string",
+                        "example": "Real Madrid"
+                      },
+                      "number-of-employees": {
+                        "type": "number",
+                        "example": 1000
+                      },
+                      "email": {
+                        "type": "string",
+                        "example": "company@realmadrid.com"
+                      },
+                      "industry": {
+                        "type": "string",
+                        "description": "industry of the account",
+                        "enum": [
+                          "football",
+                          "banking",
+                          "web3"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "name",
+                      "email"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Accounts not found"
+          },
+          "405": {
+            "description": "Validation exception"
+          }
+        },
+        "security": [
+          {
+            "client-id": []
+          },
+          {
+            "client-secret": []
+          }
+        ]
+      }
+    },
+    "/lead": {
+      "get": {
+        "tags": [
+          "lead"
+        ],
+        "summary": "get existing leads",
+        "description": "get existing leads",
+        "operationId": "getLeads",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": null,
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "example": "00Q68000005RITMEA4"
+                      },
+                      "name": {
+                        "type": "string",
+                        "example": "Frederick Mann"
+                      },
+                      "email": {
+                        "type": "string",
+                        "example": "fmann@example.com"
+                      },
+                      "industry": {
+                        "type": "string",
+                        "description": "industry of the lead",
+                        "enum": [
+                          "agriculture",
+                          "banking",
+                          "web3"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "name",
+                      "email"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Leads not found"
+          },
+          "405": {
+            "description": "Validation exception"
+          }
+        },
+        "security": [
+          {
+            "client-id": []
+          },
+          {
+            "client-secret": []
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "lead"
+        ],
+        "summary": "Update an existing lead",
+        "description": "Update an existing lead by Id",
+        "operationId": "updateLead",
+        "requestBody": {
+          "description": "Update an existent lead in salesforce",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "example": "00Q68000005RITMEA4"
+                  },
+                  "name": {
+                    "type": "string",
+                    "example": "Frederick Mann"
+                  },
+                  "email": {
+                    "type": "string",
+                    "example": "fmann@example.com"
+                  },
+                  "industry": {
+                    "type": "string",
+                    "description": "industry of the lead",
+                    "enum": [
+                      "agriculture",
+                      "banking",
+                      "web3"
+                    ]
+                  }
+                },
+                "required": [
+                  "name",
+                  "email"
+                ]
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "example": "00Q68000005RITMEA4"
+                    },
+                    "name": {
+                      "type": "string",
+                      "example": "Frederick Mann"
+                    },
+                    "email": {
+                      "type": "string",
+                      "example": "fmann@example.com"
+                    },
+                    "industry": {
+                      "type": "string",
+                      "description": "industry of the lead",
+                      "enum": [
+                        "agriculture",
+                        "banking",
+                        "web3"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "email"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "Lead not found"
+          },
+          "405": {
+            "description": "Validation exception"
+          }
+        },
+        "security": [
+          {
+            "client-id": []
+          },
+          {
+            "client-secret": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "lead"
+        ],
+        "summary": "Add a new lead",
+        "description": "Add a new lead",
+        "operationId": "addLead",
+        "requestBody": {
+          "description": "Create a new lead in Salesforce",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "example": "00Q68000005RITMEA4"
+                  },
+                  "name": {
+                    "type": "string",
+                    "example": "Frederick Mann"
+                  },
+                  "email": {
+                    "type": "string",
+                    "example": "fmann@example.com"
+                  },
+                  "industry": {
+                    "type": "string",
+                    "description": "industry of the lead",
+                    "enum": [
+                      "agriculture",
+                      "banking",
+                      "web3"
+                    ]
+                  }
+                },
+                "required": [
+                  "name",
+                  "email"
+                ]
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "example": "00Q68000005RITMEA4"
+                    },
+                    "name": {
+                      "type": "string",
+                      "example": "Frederick Mann"
+                    },
+                    "email": {
+                      "type": "string",
+                      "example": "fmann@example.com"
+                    },
+                    "industry": {
+                      "type": "string",
+                      "description": "industry of the lead",
+                      "enum": [
+                        "agriculture",
+                        "banking",
+                        "web3"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "email"
+                  ]
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Invalid input"
+          }
+        },
+        "security": [
+          {
+            "oauth": [
+              "write:leads",
+              "read:leads"
+            ]
+          }
+        ]
+      }
+    },
+    "/lead/{leadId}": {
+      "get": {
+        "tags": [
+          "lead"
+        ],
+        "summary": "Find lead by ID",
+        "description": "Returns a single lead",
+        "operationId": "getLeadById",
+        "parameters": [
+          {
+            "name": "leadId",
+            "in": "path",
+            "description": "ID of lead to return",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "example": "00Q68000005RITMEA4"
+                    },
+                    "name": {
+                      "type": "string",
+                      "example": "Frederick Mann"
+                    },
+                    "email": {
+                      "type": "string",
+                      "example": "fmann@example.com"
+                    },
+                    "industry": {
+                      "type": "string",
+                      "description": "industry of the lead",
+                      "enum": [
+                        "agriculture",
+                        "banking",
+                        "web3"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "email"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "Lead not found"
+          }
+        },
+        "security": [
+          {
+            "api_key": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "lead"
+        ],
+        "summary": "Update a lead in Salesforce",
+        "description": "Update lead",
+        "operationId": "updateLeadById",
+        "parameters": [
+          {
+            "name": "leadId",
+            "in": "path",
+            "description": "ID of lead that needs to be updated",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "description": "Name of lead that needs to be updated",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "description": "Status of lead that needs to be updated",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "example": "00Q68000005RITMEA4"
+                  },
+                  "name": {
+                    "type": "string",
+                    "example": "Frederick Mann"
+                  },
+                  "email": {
+                    "type": "string",
+                    "example": "fmann@example.com"
+                  },
+                  "industry": {
+                    "type": "string",
+                    "description": "industry of the lead",
+                    "enum": [
+                      "agriculture",
+                      "banking",
+                      "web3"
+                    ]
+                  }
+                },
+                "required": [
+                  "name",
+                  "email"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "405": {
+            "description": "Invalid input"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "lead"
+        ],
+        "summary": "Deletes a lead",
+        "description": "delete a lead",
+        "operationId": "deleteLead",
+        "parameters": [
+          {
+            "name": "api_key",
+            "in": "header",
+            "description": "delete lead",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "leadId",
+            "in": "path",
+            "description": "Lead id to delete",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid lead value"
+          }
+        },
+        "security": [
+          {
+            "basic-auth": []
+          }
+        ]
+      }
+    },
+    "/lead/{leadId}/uploadImage": {
+      "post": {
+        "tags": [
+          "lead"
+        ],
+        "summary": "uploads an image",
+        "description": "upload image",
+        "operationId": "uploadFile",
+        "parameters": [
+          {
+            "name": "leadId",
+            "in": "path",
+            "description": "ID of lead to update",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "additionalMetadata",
+            "in": "query",
+            "description": "Additional Metadata",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/octet-stream": {
+              "schema": {
+                "type": "string",
+                "format": "binary"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "format": "int32",
+                      "example": 200
+                    },
+                    "type": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "request processed successfully"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "jwt": {
+        "description": "JWT bearer token description...",
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      },
+      "oauth": {
+        "type": "oauth2",
+        "flows": {
+          "implicit": {
+            "authorizationUrl": "https://localhost/oauth/authorize",
+            "scopes": {
+              "write:leads": "modify leads",
+              "read:leads": "read your leads"
+            }
+          }
+        }
+      },
+      "api_key": {
+        "type": "apiKey",
+        "name": "api_key",
+        "in": "header"
+      },
+      "basic-auth": {
+        "description": "Basic Auth token description...",
+        "type": "http",
+        "scheme": "basic"
+      },
+      "client-id": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "x-client-id"
+      },
+      "client-secret": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "x-client-secret"
+      }
+    }
+  }
+}
+
