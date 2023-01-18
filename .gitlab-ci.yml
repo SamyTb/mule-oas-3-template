@@ -7,10 +7,12 @@ before_script:
 stages:
   - deploy
 
-build-job:       # This job runs in the build stage, which runs first.
+build-job:       # This job runs in the deploy stage
   stage: deploy
   script:
     - MAIN_FILE=$(echo "$CI_PROJECT_NAME" | sed -e "s/-spec/.yaml/g") #get main file name in variable
     - BUNDLE_FILE=$(echo "$CI_PROJECT_NAME" | sed -e "s/-spec/-bundle.yaml/g") #get bundle file name in variable
     - swagger-cli bundle "$MAIN_FILE" -o "$BUNDLE_FILE" #build oas 3 json bundle file
     - spectral lint $MAIN_FILE --ruleset ruleset/myruleset.yaml #check oas file with rules
+    - REQ_RES = $(curl --location --request POST "https://anypoint.mulesoft.com/accounts/login" --header "Content-Type:application/json" --header "Accept:application/json" --data-raw '{"username":"samy_toubal", "password":"Anypoint1Password@2"}')
+    - echo "$REQ_RES"
