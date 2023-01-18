@@ -15,4 +15,5 @@ build-job:       # This job runs in the deploy stage
     - swagger-cli bundle "$MAIN_FILE" -o "$BUNDLE_FILE" #build oas 3 json bundle file
     - spectral lint $MAIN_FILE --ruleset ruleset/myruleset.yaml #check oas file with rules
     - curl --location --request POST "https://anypoint.mulesoft.com/accounts/login" --header "Content-Type:application/json" --header "Accept:application/json" --data-raw '{"username":"samy_toubal", "password":"Anypoint1Password@2"}' > token.txt
-    - MULE_TOKEN= $(cat token.txt | python3 -c "import sys, json; print(json.load(sys.stdin)['body']['request'])"))
+    - cat token.txt | python3 -c "import sys, json; print(json.load(sys.stdin)['body']['request'])" > token.txt
+    - cat token.txt
