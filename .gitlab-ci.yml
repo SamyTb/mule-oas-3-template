@@ -28,8 +28,8 @@ build-job:       # This job runs in the deploy stage
     - API_VERSION=$(grep -A0 'version:' $MAIN_FILE | tail -n1 | awk '{ print $2}')
     - ls -ax
     #| python3 -c "import sys, json; print(json.load(sys.stdin)['info'])" > token.txt
-    - MAIN_FILE_REQUEST = '{"mainFile":"$MAIN_JSON_FILE"}'
-    - FILE_REQUEST = '{"oas.json":"$MAIN_JSON_FILE"}'
+    - MAIN_FILE_REQUEST = $(echo "'{"mainFile":"$MAIN_JSON_FILE"}'")
+    - FILE_REQUEST = $(echo "'{"oas.json":"$MAIN_JSON_FILE"}'")
     - echo "$MAIN_FILE_REQUEST"
     - echo "$FILE_REQUEST"
     #- anypoint-cli-v4 account:environment:list
