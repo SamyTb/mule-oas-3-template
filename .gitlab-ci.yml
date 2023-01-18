@@ -6,8 +6,10 @@ before_script:
 
 stages:
   - build
+  - test
+  - deploy
 
-build-job:
+build-job:       # This job runs in the build stage, which runs first.
   stage: build
   script:
     - MAIN_FILE=$(echo "$CI_PROJECT_NAME" | sed -e "s/-spec/.yaml/g")
@@ -16,6 +18,20 @@ build-job:
     - echo "$BUNDLE_FILE"
     - swagger-cli bundle "$MAIN_FILE" -o "$BUNDLE_FILE"
     - ls -ax
-    #- spectral lint sample-api.yaml --ruleset ruleset/myruleset.yaml
+
+unit-test-job:   # This job runs in the test stage.
+  stage: test    # It only starts when the job in the build stage completes successfully.
+  script:
+    - MAIN_FILE=$(echo "$CI_PROJECT_NAME" | sed -e "s/-spec/.yaml/g")
+    - BUNDLE_FILE=$(echo "$CI_PROJECT_NAME" | sed -e "s/-spec/-bundle.yaml/g")
+    - echo "$MAIN_FILE"
+    - echo "$BUNDLE_FILE"
     - ls -ax
-    - echo "FINISHED"
+    - - spectral lint sample-api.yaml --ruleset ruleset/myruleset.yaml
+
+deploy-job:      # This job runs in the deploy stage.
+  stage: deploy  # It only runs when *both* jobs in the test stage complete successfully.
+  environment: production
+  script:
+    - echo "Deploying application..."
+    - echo "Application successfully deployed."
