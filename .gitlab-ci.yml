@@ -29,7 +29,7 @@ build-job:       # This job runs in the deploy stage
     - ls -ax
     #| python3 -c "import sys, json; print(json.load(sys.stdin)['info'])" > token.txt
     - anypoint-cli-v4 account:environment:list
-    - anypoint-cli-v4 exchange:asset:upload --name "OAS Asset" --description "OAS" --properties='{"mainFile":"${MAIN_JSON_FILE}"}' --files='{"oas.json":"${MAIN_JSON_FILE}"}' $GROUP_ID/$ASSET_NAME/$API_VERSION
+    - anypoint-cli-v4 exchange:asset:upload --name "OAS Asset" --description "OAS" --properties='{'mainFile':'"$MAIN_JSON_FILE"'}' --files='{'oas.json':'$"MAIN_JSON_FILE"'}' $GROUP_ID/$ASSET_NAME/$API_VERSION
 
 
    
