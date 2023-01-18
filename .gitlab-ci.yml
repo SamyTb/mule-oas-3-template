@@ -28,13 +28,13 @@ build-job:       # This job runs in the deploy stage
     - API_VERSION=$(grep -A0 'version:' $MAIN_FILE | tail -n1 | awk '{ print $2}')
     - ls -ax
     #| python3 -c "import sys, json; print(json.load(sys.stdin)['info'])" > token.txt
-    - echo "{\"apiVersion\":\"v1\",\"mainFile\":\"$MAIN_JSON_FILE\"}" > main.json
-    - echo "{\"oas.json\":\"$MAIN_JSON_FILE\"}" > file.json
-    - cat main.json
-    - cat file.json
+    - MAIN_FILE_REQUEST=$(echo "{\"apiVersion\":\"v1\",\"mainFile\":\"$MAIN_JSON_FILE\"}")
+    - FILE_REQUEST=$(echo "{\"oas.json\":\"$MAIN_JSON_FILE\"}")
+    - echo "$MAIN_FILE_REQUEST"
+    - echo "$FILE_REQUEST"
     #- anypoint-cli-v4 account:environment:list
-    - echo "anypoint-cli-v4 exchange:asset:upload --name \"OAS Asset\" --description \"OAS\" --properties=$MAIN_FILE_REQUEST --files=$FILE_REQUEST $GROUP_ID/$ASSET_NAME/$API_VERSION"
-    - anypoint-cli-v4 exchange:asset:upload --name \"OAS Asset\" --description \"OAS\" --properties=@main.json --files=@file.json $GROUP_ID/$ASSET_NAME/$API_VERSION
+    #- echo "anypoint-cli-v4 exchange:asset:upload --name \"OAS Asset\" --description \"OAS\" --properties=$MAIN_FILE_REQUEST --files=$FILE_REQUEST $GROUP_ID/$ASSET_NAME/$API_VERSION"
+    - anypoint-cli-v4 exchange:asset:upload --name \"OAS Asset\" --description \"OAS\" --properties=$MAIN_FILE_REQUEST --files=$FILE_REQUEST $GROUP_ID/$ASSET_NAME/$API_VERSION
 
 
    
