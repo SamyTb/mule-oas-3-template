@@ -27,7 +27,7 @@ unit-test-job:   # This job runs in the test stage.
     - echo "$MAIN_FILE"
     - echo "$BUNDLE_FILE"
     - ls -ax
-    - - spectral lint sample-api.yaml --ruleset ruleset/myruleset.yaml
+    - spectral lint sample-api.yaml --ruleset ruleset/myruleset.yaml
 
 deploy-job:      # This job runs in the deploy stage.
   stage: deploy  # It only runs when *both* jobs in the test stage complete successfully.
