@@ -36,7 +36,7 @@ build-job:       # This job runs in the deploy stage
     - echo "$FILE_REQUEST"
     #- anypoint-cli-v4 account:environment:list
     - echo "anypoint-cli-v4 exchange:asset:upload --name \"OAS Asset\" --description \"OAS\" --properties=$MAIN_FILE_REQUEST --files=$FILE_REQUEST $GROUP_ID/$ASSET_NAME/$API_VERSION"
-    - anypoint-cli-v4 exchange:asset:upload --name \"OAS Asset\" --description \"OAS\" --properties=$MAIN_FILE_REQUEST --files=$FILE_REQUEST $GROUP_ID/$ASSET_NAME/$API_VERSION
+    - anypoint-cli-v4 exchange:asset:upload --name \"OAS Asset\" --description \"OAS\" --properties="$MAIN_FILE_REQUEST" --files="$FILE_REQUEST" "$GROUP_ID/$ASSET_NAME/$API_VERSION"
 
 
    
