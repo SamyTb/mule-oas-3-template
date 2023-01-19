@@ -81,6 +81,37 @@ src
 
 * ![yaml-image]
 
+<!-- GETTING STARTED -->
+## Getting Started
+
+To get a local copy up and running follow these simple example steps.
+
+### Prerequisites
+
+As we are going to use some javascript libraries, it's important to make sure that `npm` is installed in your machine. If not please run the following command
+
+* npm
+  ```sh
+  npm install npm@latest -g
+  ```
+
+Anypoint CLI (Command Line Interface) is a command-line tool that allows developers to interact with the Anypoint Platform
+* Anypoint CLI
+  ```sh
+  npm install -g anypoint-cli-v4
+  ```
+
+Swagger CLI (Command Line Interface) is a command-line tool that allows developers to interact with the Swagger ecosystem, which is a set of tools and technologies for designing, building, and documenting RESTful APIs.
+* Swagger CLI
+  ```sh
+  npm install -g @apidevtools/swagger-cli
+  ```
+
+Spectral CLI (Command Line Interface) is a command-line tool that allows developers to interact with Spectral, which is a tool for linting and validating OpenAPI/Swagger files.
+* Spectral CLI
+  ```sh
+  npm install -g @stoplight/spectral-cli
+  ```
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
