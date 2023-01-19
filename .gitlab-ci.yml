@@ -21,13 +21,13 @@ build-job:       # This job runs in the deploy stage
     - MAIN_JSON_FILE=$(echo "$CI_PROJECT_NAME" | sed -e "s/-spec/.json/g") #get bundle file name in variable
     - echo "$MAIN_JSON_FILE"
     - ASSET_NAME=$(echo "$CI_PROJECT_NAME" | sed -e "s/-spec//g")
-    - swagger-cli bundle "$MAIN_FILE" -o "$BUNDLE_FILE" #build oas 3 json bundle file
+    - swagger-cli bundle --dereference "$MAIN_FILE" > "$BUNDLE_FILE" #build oas 3 json bundle file
     - spectral lint $MAIN_FILE --ruleset ruleset/myruleset.yaml #check oas file with rules
     #- curl --location --request POST "https://anypoint.mulesoft.com/accounts/login" --header "Content-Type:application/json" --header "Accept:application/json" --data-raw '{"username":"samy_toubal", "password":"Anypoint1Password@2"}' > token.txt
     #- cat $MAIN_FILE | grep -A3 'version:' sample-api.yaml | tail -n1
     - API_VERSION=$(grep -A0 'version:' $MAIN_FILE | tail -n1 | awk '{ print $2}')
     - cat $BUNDLE_FILE
-    - swagger-cli bundle "$BUNDLE_FILE" -o "$MAIN_JSON_FILE" #build oas 3 json oas file
+    - swagger-cli bundle --dereference "$BUNDLE_FILE" > "$MAIN_JSON_FILE" #build oas 3 json oas file
     - cat $MAIN_JSON_FILE
     #| python3 -c "import sys, json; print(json.load(sys.stdin)['info'])" > token.txt
     - MAIN_FILE_REQUEST=$(echo "{\"apiVersion\":\"v1\",\"mainFile\":\"$MAIN_JSON_FILE\"}")
