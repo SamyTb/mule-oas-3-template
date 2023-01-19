@@ -26,7 +26,6 @@ build-job:       # This job runs in the deploy stage
     - spectral lint $MAIN_FILE --ruleset ruleset/myruleset.yaml #check oas file with rules
     #- curl --location --request POST "https://anypoint.mulesoft.com/accounts/login" --header "Content-Type:application/json" --header "Accept:application/json" --data-raw '{"username":"samy_toubal", "password":"Anypoint1Password@2"}' > token.txt
     #- cat $MAIN_FILE | grep -A3 'version:' sample-api.yaml | tail -n1
-    - export NODE_DEBUG=request,http,axios
     - API_VERSION=$(grep -A0 'version:' $MAIN_FILE | tail -n1 | awk '{ print $2}')
     - ls -ax
     #| python3 -c "import sys, json; print(json.load(sys.stdin)['info'])" > token.txt
