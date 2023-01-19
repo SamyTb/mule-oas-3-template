@@ -6,7 +6,7 @@ info:
   contact:
     email: stoubal@salesforce.com
     name: Samy Toubal
-  version: 1.0.0
+  version: 1.0.1
   x-audience: internal-apps
 
 servers:
