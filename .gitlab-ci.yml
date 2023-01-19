@@ -9,6 +9,7 @@ before_script:
   - export ANYPOINT_ORG=a9a32236-77e1-4d8b-baaf-22ff5a53b7f1
   - export GROUP_ID=a9a32236-77e1-4d8b-baaf-22ff5a53b7f1
   #- export NODE_DEBUG=request,http,axios
+  - sudo snap install yq
 
 stages:
   - deploy
@@ -26,11 +27,13 @@ build-job:       # This job runs in the deploy stage
     - spectral lint $MAIN_FILE --ruleset ruleset/myruleset.yaml #check oas file with rules
 
     - API_VERSION=$(grep -A0 'version:' $MAIN_FILE | tail -n1 | awk '{ print $2}')
+    - API_DESCRIPTION=$(grep -A0 'description:' $MAIN_FILE | tail -n1 | awk '{ print $2}')
+    - echo "$API_DESCRIPTION"
 
     - MAIN_FILE_REQUEST=$(echo "{\"apiVersion\":\"v1\",\"mainFile\":\"$MAIN_JSON_FILE\"}") #build main file json body
     - FILE_REQUEST=$(echo "{\"oas.json\":\"$MAIN_JSON_FILE\"}") #build oas json body
 
-    - anypoint-cli-v4 exchange:asset:upload $GROUP_ID/$ASSET_NAME/$API_VERSION --name "OAS Asset" --description "OAS" --properties="$MAIN_FILE_REQUEST" --files="$FILE_REQUEST" 
+    - anypoint-cli-v4 exchange:asset:upload $GROUP_ID/$ASSET_NAME/$API_VERSION --name $ASSET_NAME --description "OAS" --properties="$MAIN_FILE_REQUEST" --files="$FILE_REQUEST" 
 
 
    
