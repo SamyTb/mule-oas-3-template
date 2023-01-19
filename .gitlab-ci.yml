@@ -22,12 +22,13 @@ build-job:       # This job runs in the deploy stage
     - echo "$MAIN_JSON_FILE"
     - ASSET_NAME=$(echo "$CI_PROJECT_NAME" | sed -e "s/-spec//g")
     - swagger-cli bundle "$MAIN_FILE" -o "$BUNDLE_FILE" #build oas 3 json bundle file
-    - swagger-cli bundle "$BUNDLE_FILE" -o "$MAIN_JSON_FILE" #build oas 3 json oas file
     - spectral lint $MAIN_FILE --ruleset ruleset/myruleset.yaml #check oas file with rules
     #- curl --location --request POST "https://anypoint.mulesoft.com/accounts/login" --header "Content-Type:application/json" --header "Accept:application/json" --data-raw '{"username":"samy_toubal", "password":"Anypoint1Password@2"}' > token.txt
     #- cat $MAIN_FILE | grep -A3 'version:' sample-api.yaml | tail -n1
     - API_VERSION=$(grep -A0 'version:' $MAIN_FILE | tail -n1 | awk '{ print $2}')
-    - ls -ax
+    - cat $BUNDLE_FILE
+    - swagger-cli bundle "$BUNDLE_FILE" -o "$MAIN_JSON_FILE" #build oas 3 json oas file
+    - cat $MAIN_JSON_FILE
     #| python3 -c "import sys, json; print(json.load(sys.stdin)['info'])" > token.txt
     - MAIN_FILE_REQUEST=$(echo "{\"apiVersion\":\"v1\",\"mainFile\":\"$MAIN_JSON_FILE\"}")
     - FILE_REQUEST=$(echo "{\"oas.json\":\"$MAIN_JSON_FILE\"}")
@@ -35,8 +36,8 @@ build-job:       # This job runs in the deploy stage
     - echo "$FILE_REQUEST"
     #- anypoint-cli-v4 account:environment:list
     #- echo "anypoint-cli-v4 exchange:asset:upload --name \"OAS Asset\" --description \"OAS\" --properties=$MAIN_FILE_REQUEST --files=$FILE_REQUEST $GROUP_ID/$ASSET_NAME/$API_VERSION"
-    - cat $MAIN_JSON_FILE
-    - anypoint-cli-v4 exchange:asset:upload $GROUP_ID/$ASSET_NAME/$API_VERSION --name \"OAS Asset\" --description \"OAS\" --properties="$MAIN_FILE_REQUEST" --files="$FILE_REQUEST" 
+    #- cat $MAIN_JSON_FILE
+    #- anypoint-cli-v4 exchange:asset:upload $GROUP_ID/$ASSET_NAME/$API_VERSION --name \"OAS Asset\" --description \"OAS\" --properties="$MAIN_FILE_REQUEST" --files="$FILE_REQUEST" 
 
 
    
