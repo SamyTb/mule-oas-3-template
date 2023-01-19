@@ -655,21 +655,27 @@ components:
 
 All these types of security schemes are under the folder `/securitySchemes` available for re-use
 
-## Endpoints
-The following endpoints are available in this API:
-
-| Method  | Endpoint | Description |
-| ------------- |:-------------:|:-------------:|
-| GET | /leads | Retrieve a list of leads |
-| GET | /leads/{id} | Retrieve a specific item by ID |
-| POST | /leads | Create a new lead |
-| PUT | /leads/{id} | Update an existing lead |
-| DELETE | /leads/{id} | Delete an existing lead |
-
-
 ## Data Types
+
+The data type of a schema is defined by the type keyword, for example, type: string. OpenAPI defines the following basic types:
+string (this includes dates and files)
+* number
+* integer
+* boolean
+* array
+* object
+
+These types exist in most programming languages, though they may go by different names. Using these types, you can describe any data structures.
+
+Note that there is no `null` type; instead, the `nullable` attribute is used as a modifier of the base type.
+
+Additional `type-specific` keywords can be used to refine the data type, for example, limit the string length or specify an `enum` of possible values.
+
+
 The following data types are used in this API:
 
+* Lead
+  
 ```
 Lead:
   required:
@@ -694,9 +700,47 @@ Lead:
         - banking
         - web3
 ```
+* Account
 
-## Security
-This API uses Basic Authentication for security. You will need to include the Authorization header with a valid username and password in each request.
+```
+type: object
+properties:
+  id:
+    type: string
+    example: 00168000005RITMEA4
+  name:
+    type: string
+    example: Real Madrid
+  number-of-employees:
+    type: number
+    example: 1000
+  email:
+    type: string
+    example: company@realmadrid.com
+  industry:
+    type: string
+    description: industry of the account
+    enum:
+      - football
+      - banking
+      - web3
+required:
+  - name
+  - email
+```
+
+
+## Endpoints
+The following endpoints are available in this API:
+
+| Method  | Endpoint | Description |
+| ------------- |:-------------:|:-------------:|
+| GET | /leads | Retrieve a list of leads |
+| GET | /leads/{id} | Retrieve a specific item by ID |
+| POST | /leads | Create a new lead |
+| PUT | /leads/{id} | Update an existing lead |
+| DELETE | /leads/{id} | Delete an existing lead |
+| DELETE | /accounts |Retrieve a list of accounts |
 
 ## Examples
 Here is an example of how to retrieve a list of leads:
@@ -706,8 +750,9 @@ GET https://my-api.com/v1/items
 Authorization: Basic dXNlcjpwYXNzd29yZA==
 ```
 
-## Contribute
-To contribute to this API, please fork the repository and submit a pull request.
+## Governance
+
+
 
 ## License
 
