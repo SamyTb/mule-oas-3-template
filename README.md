@@ -824,6 +824,67 @@ spectral lint sample-api.yaml --ruleset ruleset/myruleset.yaml
 
 ## Continuous Deployment
 
+<!-- PROJECT LOGO -->
+<br />
+<div align="left">
+    <img src="images/ci.png" alt="Logo" width="780" height="300">
+
+  <h3 align="left">Continuous deployment with Gitlab</h3>
+</div>
+
+This template contains a gitlab-ci.yml file for a deployment to exchange. Once the code is pushed to a git repository the following script is executed : 
+
+```
+image: nikolaik/python-nodejs:latest
+
+before_script:
+  - npm install -g @apidevtools/swagger-cli
+  - npm install -g @stoplight/spectral-cli
+  - npm install -g anypoint-cli-v4
+  - export ANYPOINT_CLIENT_ID=XXX
+  - export ANYPOINT_CLIENT_SECRET=XXX
+  - export ANYPOINT_ORG=XXX
+  - export GROUP_ID=XXX
+  - wget https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -O /usr/bin/yq &&\
+  - chmod +x /usr/bin/yq
+
+stages:
+  - deploy
+
+publish-to-exchange:       # This job runs in the deploy stage
+  stage: deploy
+  script:
+    - MAIN_FILE=$(echo "$CI_PROJECT_NAME" | sed -e "s/-spec/.yaml/g") #get main file name in a variable
+    - BUNDLE_FILE=$(echo "$CI_PROJECT_NAME" | sed -e "s/-spec/.json/g") #get bundle file name in a variable
+    - MAIN_JSON_FILE=$(echo "$CI_PROJECT_NAME" | sed -e "s/-spec/.json/g") #get bundle file name in a variable
+    - ASSET_NAME=$(echo "$CI_PROJECT_NAME" | sed -e "s/-spec//g") #get exchange asset name in a variable
+
+    - swagger-cli bundle --dereference "$MAIN_FILE" > "$BUNDLE_FILE" #build oas 3 json bundle file
+    - spectral lint $MAIN_FILE --ruleset ruleset/myruleset.yaml #check oas file with rules
+
+    - API_VERSION=$(yq '.info.version' $MAIN_FILE)
+    - API_DESCRIPTION=$(yq '.info.description' $MAIN_FILE)
+    - API_TITLE=$(yq '.info.title' $MAIN_FILE)
+
+    - MAIN_FILE_REQUEST=$(echo "{\"apiVersion\":\"v1\",\"mainFile\":\"$MAIN_JSON_FILE\"}") #build main file json body
+    - FILE_REQUEST=$(echo "{\"oas.json\":\"$MAIN_JSON_FILE\"}") #build oas json body
+
+    - anypoint-cli-v4 exchange:asset:upload $GROUP_ID/$ASSET_NAME/$API_VERSION --name "$API_TITLE" --description "$API_DESCRIPTION" --properties="$MAIN_FILE_REQUEST" --files="$FILE_REQUEST" 
+```
+
+
+* Swagger cli is used to create the swagger bundle
+* Spectral cli is used to validate the OAS file with the rules located in `/ruleset/myruleset.yaml`
+* Anypoint cli is used to deploy the OAS in Exchange
+
+<!-- PROJECT LOGO -->
+<br />
+<div align="left">
+    <img src="images/api.png" alt="Logo" width="780" height="500">
+
+  <h3 align="left">Sample API deployed in Exchange</h3>
+</div>
+
 
 ## License
 
