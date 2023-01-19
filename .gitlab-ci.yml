@@ -1,4 +1,4 @@
-image: python-nodejs:latest
+image: nikolaik/python-nodejs:latest
 
 before_script:
   - npm install -g @apidevtools/swagger-cli
