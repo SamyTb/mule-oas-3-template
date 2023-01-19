@@ -9,7 +9,8 @@ before_script:
   - export ANYPOINT_ORG=a9a32236-77e1-4d8b-baaf-22ff5a53b7f1
   - export GROUP_ID=a9a32236-77e1-4d8b-baaf-22ff5a53b7f1
   #- export NODE_DEBUG=request,http,axios
-  - pip install yq
+  - wget https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -O /usr/bin/yq &&\
+  - chmod +x /usr/bin/yq
 
 stages:
   - deploy
