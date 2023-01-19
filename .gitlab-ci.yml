@@ -28,7 +28,7 @@ build-job:       # This job runs in the deploy stage
     - spectral lint $MAIN_FILE --ruleset ruleset/myruleset.yaml #check oas file with rules
 
 
-    - API_VERSION=$(cat $MAIN_FILE | yq '.version')
+    - API_VERSION=$(yq '.info.version' $MAIN_FILE)
     #- API_VERSION=$(grep -A0 'version:' $MAIN_FILE | tail -n1 | awk '{ print $2}')
     - echo "$API_VERSION"
     - API_DESCRIPTION=$(grep -A0 'description:' $MAIN_FILE | tail -n1 | awk '{ print $2}')
