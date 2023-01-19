@@ -26,7 +26,6 @@ build-job:       # This job runs in the deploy stage
     - swagger-cli bundle --dereference "$MAIN_FILE" > "$BUNDLE_FILE" #build oas 3 json bundle file
     - spectral lint $MAIN_FILE --ruleset ruleset/myruleset.yaml #check oas file with rules
 
-
     - API_VERSION=$(yq '.info.version' $MAIN_FILE)
     #- API_VERSION=$(grep -A0 'version:' $MAIN_FILE | tail -n1 | awk '{ print $2}')
     - echo "$API_VERSION"
