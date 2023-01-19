@@ -9,7 +9,8 @@ before_script:
   - export ANYPOINT_ORG=a9a32236-77e1-4d8b-baaf-22ff5a53b7f1
   - export GROUP_ID=a9a32236-77e1-4d8b-baaf-22ff5a53b7f1
   #- export NODE_DEBUG=request,http,axios
-  - sudo snap install yq
+  - apt-get install python-pip
+  - pip install yq
 
 stages:
   - deploy
