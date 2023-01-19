@@ -31,7 +31,7 @@ build-job:       # This job runs in the deploy stage
     - API_VERSION=$(yq '.info.version' $MAIN_FILE)
     #- API_VERSION=$(grep -A0 'version:' $MAIN_FILE | tail -n1 | awk '{ print $2}')
     - echo "$API_VERSION"
-    - API_DESCRIPTION=$(grep -A0 'description:' $MAIN_FILE | tail -n1 | awk '{ print $2}')
+    - API_DESCRIPTION=$(yq '.info.description' $MAIN_FILE)
     - echo "$API_DESCRIPTION"
 
     - MAIN_FILE_REQUEST=$(echo "{\"apiVersion\":\"v1\",\"mainFile\":\"$MAIN_JSON_FILE\"}") #build main file json body
