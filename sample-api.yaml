@@ -4,7 +4,7 @@ info:
   description: |-
     This is a sample Mulesoft API based on the OpenAPI 3.0 specification.
   contact:
-    email: stoubal@salesforce.com
+    #email: stoubal@salesforce.com
     name: Samy Toubal
   version: 1.0.1
   x-audience: internal-apps

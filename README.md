@@ -752,6 +752,77 @@ Authorization: Basic dXNlcjpwYXNzd29yZA==
 
 ## Governance
 
+In this template, we have created a set of rules under the folder `ruleset/myruleset.yaml`. In order to do so, we are using the open-source library [spectral](https://docs.stoplight.io/docs/spectral/674b27b261c3c-overview) that allows us to : 
+
+  * Create custom rules to lint JSON or YAML objects
+  * Validate and lint OpenAPI v2 & v3.x and AsyncAPI Documents
+  * Automate API Style Guides using rulesets & improve consistency across APIs
+  * Create custom functions for advanced use cases
+
+    *Rules included in the Template :*
+
+    ```
+    openapi-v3-have-get-method
+    openapi-v3-do-not-use-api-for-base-path
+    openapi-v3-info-contact
+    openapi-v3-info-contact-email
+    openapi-v3-info-contact-name
+    openapi-v3-operations-tags
+    openapi-v3-openapi-version
+    openapi-v3-operations-description
+    openapi-v3-operations-description-length
+    openapi-v3-request-body-on-patch
+    openapi-v3-request-body-on-post
+    openapi-v3-request-body-on-put
+    openapi-v3-have-request-body-examples
+    openapi-v3-no-trailing-slash-on-paths
+    openapi-v3-info-version
+    openapi-v3-info-x-audience
+    openapi-v3-limit-number-of-sub-resources
+    openapi-v3-no-path-dashes
+    openapi-v3-no-request-body-on-delete
+    openapi-v3-no-request-body-on-get
+    ````
+## Write a new rule : 
+
+Here's an example of a ruleset with a single rule:
+
+```
+rules:
+  paths-kebab-case:
+    description: Paths should be kebab-case.
+    message: "{{property}} should be kebab-case (lower-case and separated with hyphens)"
+    severity: warn
+    given: $.paths[*]~
+    then:
+      function: pattern
+      functionOptions:
+        match: "^(\/|[a-z0-9-.]+|{[a-zA-Z0-9_]+})+$"
+````
+
+The example rule validates an OpenAPI description by ensuring the paths properties uses kebab-case (lower-case and separated with hyphens).
+
+Breaking down each part of the rule:
+
+* `description` and message help users quickly understand what the goal of the rule is
+* `severity` help define the importance of following the rule
+* The `given` keyword tells Spectral what part of the JSON or YAML file to target by using JSONPath (Spectral uses JSONPath Plus).
+* The `then` property includes the `function` type and options that tells Spectral how to apply the function to the JSON or YAML file, and make sure that the rule is being followed or * not. Spectral has a set of [built-in functions](https://docs.stoplight.io/docs/spectral/cb95cf0d26b83-core-functions) such as `truthy` or `pattern`, which can be used to power rules.
+
+## Validate OAS locally
+
+Run the following command :
+```
+spectral lint sample-api.yaml --ruleset ruleset/myruleset.yaml
+```
+
+## Example of result
+```
+6:11  error  openapi-v3-info-contact-email  API must have a contact email available.  info.contact
+✖ 1 problem (1 error, 0 warnings, 0 infos, 0 hints)
+```
+
+## Continuous Deployment
 
 
 ## License
