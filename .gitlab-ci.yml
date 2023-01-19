@@ -40,7 +40,7 @@ build-job:       # This job runs in the deploy stage
     - MAIN_FILE_REQUEST=$(echo "{\"apiVersion\":\"v1\",\"mainFile\":\"$MAIN_JSON_FILE\"}") #build main file json body
     - FILE_REQUEST=$(echo "{\"oas.json\":\"$MAIN_JSON_FILE\"}") #build oas json body
 
-    - anypoint-cli-v4 exchange:asset:upload $GROUP_ID/$ASSET_NAME/$API_VERSION --name $API_TITLE --description $API_DESCRIPTION --properties="$MAIN_FILE_REQUEST" --files="$FILE_REQUEST" 
+    - anypoint-cli-v4 exchange:asset:upload $GROUP_ID/$ASSET_NAME/$API_VERSION --name "$API_TITLE" --description "$API_DESCRIPTION" --properties="$MAIN_FILE_REQUEST" --files="$FILE_REQUEST" 
 
 
    
